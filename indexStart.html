@@ -2,29 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>My Stop Watch in JavaScript</title>
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
+<body class="d-flex align-items-center">
 
-  <div class="container-fluid">
+  <div class="container-fluid px-5">
 
     <!-- timer -->
-    <div class="h1 p-5 mt-4 text-center bg-light rounded">
+    <div class="h1 p-5 mt-4 text-center bg-info rounded m-2">
       <span id="minutes">00</span> : <span id="seconds">00</span>
     </div>
 
     <!-- timer buttons -->
     <div class="container text-center">
-        <button class="btn btn-lg btn-success" id="start">
+        <button class="btn btn-lg btn-primary m-2" id="start">
           Start
         </button>
-        <button class="btn btn-lg btn-danger" id="stop">
+        <button class="btn btn-lg btn-danger m-2" id="stop">
           Stop
         </button>
       </div>
       <div class="container text-center">
-        <button class="btn btn-link btn-block" id="reset">
+        <button class="btn btn-sm btn-warning m-2" id="reset">
           Reset
         </button>
       </div>
