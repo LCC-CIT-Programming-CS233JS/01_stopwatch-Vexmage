@@ -40,7 +40,7 @@ function incrementTimer() {
     // calculate the number of minutes and seconds
     timerTime++;
     var minutes = Math.floor(timerTime / 60);
-    var seconds = Math.floor(timerTime % 5);
+    var seconds = Math.floor(timerTime % 60);
     
     // write the minutes and seconds to the elements on the page
     // use the function pad to make sure there's a leading 0 if necessary
