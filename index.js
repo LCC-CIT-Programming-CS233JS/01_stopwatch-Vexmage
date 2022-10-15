@@ -1,83 +1,81 @@
-/*
-    Create 3 global variables, isRunning, timer and timerTime.
-    Initialize them to false, null and 0 respectively.
-*/
-var isRunning = false;
-var timer = null;
-var timerTime = 0;
-
-function init()
+// Create a class called StopWatch.
+class StopWatch
 {
-    // Put the element on the page with an id of start in a variable
-    // Do the same for the stop button and the reset button
-    var startBtn = document.getElementById("start");
-    var stopBtn = document.getElementById("stop");
-    var resetBtn = document.getElementById("reset");
-    // Add an onclick handler to each of the buttons
-    // Use the functions startTimer, stopTimer and resetTimer 
-    startBtn.onclick = startTimer;
-    stopBtn.onclick = stopTimer;
-    resetBtn.onclick = resetTimer;
+    /*
+        Add a constructor.  In the body of the constructor
+        -   Create instance variables for these 3 variables as well
+            as all of the elements on the page that you're going to
+            refer to in code
+        -   All of the functionality of init will happen in the constructor.
+        -   Add the event handlers for the start, stop and reset buttons.
+            You'll have to bind(this) to each function because the keyword
+            this will refer to the button (not the class) when the 
+            event fires
+            -- this.startButton.onclick = this.startTimer.bind(this);
+    */
+   constructor() {
+    this.isRunning = false;
+    this.timer = null;
+    this.timerTime = 0;
 
-}
+    this.startBtn = document.getElementById("start");
+    this.stopBtn = document.getElementById("stop");
+    this.resetBtn = document.getElementById("reset");
 
+    this.startBtn.onclick = this.startTimer.bind(this);
+    this.stopBtn.onclick = this.stopTimer.bind(this);
+    this.resetBtn.onclick = this.resetTimer.bind(this);
+    this.incrementTimer = this.incrementTimer.bind(this);
+   }
 
-function startTimer() {
-    //console.log("start");
-    // if the timer is NOT running, start it
-    // call the function incrementTimer every second
-    // save the timer in a the timer variable
-    if (isRunning == false) {
-        isRunning = true;
-        timer = setInterval(incrementTimer, 1000);
+    /*
+        Convert each function to a method.  
+        -   Move it inside the class.
+        -   Remove the keyword function
+        -   Add this. in front of every variable and method
+    */
+   startTimer() {
+        if (this.isRunning == false) {
+            this.isRunning = true;
+            this.timer = setInterval(this.incrementTimer, 1000);
+        }
+    }
+    incrementTimer() {
+        this.timerTime++;
+        let minutes = Math.floor(this.timerTime / 60);
+        let seconds = Math.floor(this.timerTime % 60);
+
+        document.getElementById("minutes").innerHTML = this.pad(minutes);
+        document.getElementById("seconds").innerText = this.pad(seconds);
+    }
+
+    pad(number) {
+        if (number < 10) {
+            return "0" + number;
+        } else {  
+            return number;
+        }
+    }
+
+    stopTimer() {
+        if (this.isRunning == true) {
+            this.isRunning = false;
+            clearInterval(this.timer);
+        }     
+    }
+
+    resetTimer() {
+        this.stopTimer();
+        this.timerTime = 0;
+        document.getElementById("minutes").innerHTML = this.pad(0);
+        document.getElementById("seconds").innerText = this.pad(0);
     }
 }
 
-function incrementTimer() {
-    //console.log("increment");
+// create a variable called stopWatch
+let stopWatch;
 
-    // increment the timerTime
-    // calculate the number of minutes and seconds
-    timerTime++;
-    var minutes = Math.floor(timerTime / 60);
-    var seconds = Math.floor(timerTime % 60);
-    
-    // write the minutes and seconds to the elements on the page
-    // use the function pad to make sure there's a leading 0 if necessary
-    document.getElementById("minutes").innerHTML = pad(minutes);
-    document.getElementById("seconds").innerText = pad(seconds);
-}
-
-function pad(number) {
-    // add a leading 0 if the number is < 10
-    if (number < 10)
-    return "0" + number;
-else   
-    return number;
-/*
-return (number < 10) ? "0" + number : number;
-*/
-}
-
-function stopTimer() {
-    console.log("stop");
-    // if the timer is running, stop it
-    if (isRunning == true) {
-        isRunning = false;
-        clearInterval(timer);
-    }
-    
-}
-
-function resetTimer() {
-    // stop the timer
-    stopTimer();
-    // set the timerTime back to 0
-    timerTime = 0;
-    // write 00 to the elements on the page for minutes and seconds
-    document.getElementById("minutes").innerHTML = pad(0);
-    document.getElementById("seconds").innerText = pad(0);
-}
-
-// When the page has finished loading, call the function init
-window.onload = init;
+// Add an event handler to the load event of the window. 
+// Use an anonymous function or an arrow function to
+// set the stopWatch variable to an instance of StopWatch
+window.onload = () => {stopWatch = new StopWatch();}
